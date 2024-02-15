@@ -92,7 +92,10 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const serverSelect = document.getElementById("server-select");
-            const chatBox = document.getElementById("chat-box");
+            const chatBoxes = {
+                general: document.getElementById("general-chat"),
+                games: document.getElementById("games-chat")
+            };
             const messageInput = document.getElementById("message-input");
             const sendBtn = document.getElementById("send-btn");
             const deleteAllBtn = document.getElementById("delete-all-btn");
@@ -106,7 +109,7 @@
             });
 
             deleteAllBtn.addEventListener("click", function() {
-                chatBox.innerHTML = "";
+                chatBoxes[serverSelect.value].innerHTML = "";
             });
 
             function sendMessage() {
@@ -115,14 +118,18 @@
                 const username = usernameInput.value.trim() || server; // Use provided username or server name
                 if (message !== "") {
                     const messageElement = "<div><strong>" + username + "</strong>: " + message + "</div>";
-                    chatBox.innerHTML += messageElement;
+                    chatBoxes[server].innerHTML += messageElement;
                     messageInput.value = "";
-                    chatBox.scrollTop = chatBox.scrollHeight;
+                    chatBoxes[server].scrollTop = chatBoxes[server].scrollHeight;
                 }
             }
 
             serverSelect.addEventListener("change", function() {
-                chatBox.innerHTML = ""; // Clear chat box when changing servers
+                // Hide all chat boxes except the selected one
+                Object.values(chatBoxes).forEach(function(chatBox) {
+                    chatBox.style.display = "none";
+                });
+                chatBoxes[serverSelect.value].style.display = "block";
             });
         });
     </script>
