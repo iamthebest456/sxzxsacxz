@@ -38,6 +38,7 @@
         }
 
         .chat-box {
+            display: none; /* Hide all chat boxes initially */
             height: 250px; /* Smaller message box */
             overflow-y: scroll;
             border: 1px solid #ccc;
@@ -83,7 +84,8 @@
             <input type="text" id="username-input" placeholder="Username"> <!-- Added username input -->
             <button id="delete-all-btn">Delete All Messages</button>
         </div>
-        <div class="chat-box" id="chat-box"></div>
+        <div class="chat-box" id="general-chat"></div> <!-- Added specific ID for the General chat box -->
+        <div class="chat-box" id="games-chat"></div> <!-- Added specific ID for the Games chat box -->
         <div class="input-box">
             <input type="text" id="message-input" placeholder="Type your message...">
             <button id="send-btn">Send</button>
