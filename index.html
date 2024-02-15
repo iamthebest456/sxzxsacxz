@@ -27,11 +27,18 @@
             padding: 5px;
             font-weight: bold;
             font-size: 16px;
-            color: #00f;
+            color: #00aaff; /* Lighter shade of blue */
+        }
+
+        #username-input {
+            padding: 5px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
         }
 
         .chat-box {
-            height: 300px;
+            height: 250px; /* Smaller message box */
             overflow-y: scroll;
             border: 1px solid #ccc;
             padding: 10px;
@@ -54,7 +61,7 @@
 
         #send-btn, #delete-all-btn {
             padding: 8px 15px;
-            background-color: #f00;
+            background-color: #00aaff; /* Lighter shade of blue */
             border: none;
             border-radius: 5px;
             color: #fff;
@@ -62,7 +69,7 @@
         }
 
         #send-btn:hover, #delete-all-btn:hover {
-            background-color: #d00;
+            background-color: #0088cc; /* Darker shade of blue on hover */
         }
     </style>
 </head>
@@ -73,7 +80,8 @@
                 <option value="general">General</option>
                 <option value="games">Games</option>
             </select>
-            <button id="delete-all-btn">Delete All</button>
+            <input type="text" id="username-input" placeholder="Username"> <!-- Added username input -->
+            <button id="delete-all-btn">Delete All Messages</button>
         </div>
         <div class="chat-box" id="chat-box"></div>
         <div class="input-box">
@@ -88,6 +96,7 @@
             const messageInput = document.getElementById("message-input");
             const sendBtn = document.getElementById("send-btn");
             const deleteAllBtn = document.getElementById("delete-all-btn");
+            const usernameInput = document.getElementById("username-input"); // Added username input
 
             sendBtn.addEventListener("click", sendMessage);
             messageInput.addEventListener("keypress", function(e) {
@@ -102,15 +111,19 @@
 
             function sendMessage() {
                 const message = messageInput.value.trim();
+                const server = serverSelect.value;
+                const username = usernameInput.value.trim() || server; // Use provided username or server name
                 if (message !== "") {
-                    const server = serverSelect.value;
-                    const username = "<span style='font-weight: bold; color: #00f; font-family: sans-serif;'>" + server + "</span>";
                     const messageElement = "<div><strong>" + username + "</strong>: " + message + "</div>";
                     chatBox.innerHTML += messageElement;
                     messageInput.value = "";
                     chatBox.scrollTop = chatBox.scrollHeight;
                 }
             }
+
+            serverSelect.addEventListener("change", function() {
+                chatBox.innerHTML = ""; // Clear chat box when changing servers
+            });
         });
     </script>
 </body>
